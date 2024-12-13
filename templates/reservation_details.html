@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Details</title>
+    <link  href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-serif">
+    <div class="container mx-auto mt-24 p-6 bg-white rounded-lg shadow-md max-w-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center text-cyan-500">Reservation Details</h1>
+        <table class="table-auto w-full border-collapse border border-gray-300 mb-6">
+            <tbody>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Booking ID</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[0] }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Name</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[8] }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Surname</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[9] }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Check-in Date</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[4] }}</td>
+                </tr>
+                 <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Adults</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[6] }}</td>
+                </tr>
+                 <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Kids</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[7] }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Check-out Date</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[5] }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2 font-semibold">Price</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ reservation[3] }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <!-- Cancel Reservation Form with Confirmation Dialog -->
+            {% if reservation[6] != 'Cancelled' %}
+                <form action="{{ url_for('cancel_reservation') }}" method="POST" class="inline-block">
+                    <input type="hidden" name="booking_id" value="{{ reservation[0] }}">
+                    <button type="submit"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            onclick="return confirm('Are you sure you want to cancel this reservation?');">
+                        Cancel Reservation
+                    </button>
+                </form>
+            {% else %}
+                <p class="text-red-500 font-semibold mt-4">This reservation has already been canceled.</p>
+            {% endif %}
+
+            <!-- Go Back Button -->
+            <a href="/" class="mt-4 inline-block bg-cyan-500 hover:bg-gray-300 text-white font-bold py-2 px-4 rounded">
+                Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
+

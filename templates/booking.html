@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Airport Hotel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: serif;
+        }
+        .hero {
+            background-image: url('static/images/hello.png'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+
+        }
+    </style>
+</head>
+<body class="font-serif">
+
+    <!-- Top Bar Section -->
+    <div class="top-bar absolute w-full z-10 flex justify-between items-center p-4">
+        <button class="menu-btn bg-cyan-500 text-white py-2 px-4 rounded-lg fixed top-4 left-10 flex items-center gap-2 z-50">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+
+        <div class="logo w-16 h-16 bg-white rounded-full overflow-hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-50">
+            <img src="static/images/logo.JPG" alt="Hotel Logo" class="object-cover w-full h-full">
+        </div>
+
+        <a href="#" class="reservation-btn bg-cyan-500 text-white py-2 px-4 rounded-lg fixed top-4 right-10 z-50">
+            My Reservations
+        </a>
+    </div>
+
+    <!-- Navigation Section -->
+    <nav class="bg-cyan-500 w-full py-4 absolute mt-24 z-40">
+        <ul class="flex justify-center gap-8">
+            <li><a href="{{ url_for('home') }}" class="text-white uppercase text-sm">Home</a></li>
+            <li><a href="{{ url_for('experience_page') }}" class="text-white uppercase text-sm">Experience</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" class="text-white uppercase text-sm">Booking</a></li>
+            <li><a href="{{ url_for('news') }}" class="text-white uppercase text-sm">News & Offers</a></li>
+            <li><a href="{{ url_for('login') }}" class="text-white uppercase text-sm">Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero relative h-screen flex items-center justify-center text-center text-white">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10">
+            <h1 class="text-5xl md:text-6xl lg:text-6xl">Rooms Tailored Just for You!</h1>
+            <p class="mt-4 text-lg md:text-xl">Unwind in comfort, luxury, and style with a space that feels like home. Your getaway awaits – book the room that fits your journey</p>
+        </div>
+    </section>
+
+
+
+        <section class="search-bar-section bg-cyan-500 py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <h2 class="text-2xl font-bold text-white text-center mb-6">Find Your Perfect Stay</h2>
+        <form class="search-bar bg-white p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4 items-center justify-between" action="/search" method="POST">
+            <!-- Check-in Date -->
+            <div class="flex-1">
+                <label for="checkin" class="block text-gray-700 text-sm font-medium mb-1">Check-in Date</label>
+                <input type="date" id="checkin" name="checkin" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+
+            <!-- Check-out Date -->
+            <div class="flex-1">
+                <label for="checkout" class="block text-gray-700 text-sm font-medium mb-1">Check-out Date</label>
+                <input type="date" id="checkout" name="checkout" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+
+            <!-- Adults -->
+            <div class="flex-1">
+                <label for="adults" class="block text-gray-700 text-sm font-medium mb-1">Adults</label>
+                <input type="number" id="adults" name="adults" min="1" max="10" value="1" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+
+            <!-- Kids -->
+            <div class="flex-1">
+                <label for="kids" class="block text-gray-700 text-sm font-medium mb-1">Kids</label>
+                <input type="number" id="kids" name="kids" min="0" max="10" value="0" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+
+            <!-- Search Button -->
+            <button type="submit" class="w-full md:w-auto bg-cyan-500 text-white font-bold py-2 px-6 rounded hover:bg-cyan-600 transition mt-4 md:mt-0">
+                Search
+            </button>
+        </form>
+    </div>
+</section>
+
+
+
+
+
+
+      <section class="our-rooms-section bg-white py-16">
+    <div class="container mx-auto px-4 text-center max-w-6xl"> <!-- Slightly wider width -->
+
+        <p class="our-rooms-description text-gray-500 text-lg mb-12">
+            Discover our unique selection of rooms designed to provide ultimate comfort and style. Whether you’re visiting for relaxation, business, or a family vacation, our rooms promise a refined stay with luxurious amenities and breathtaking views.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center">
+            <!-- Room 1 -->
+            <div class="room-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md mx-auto"> <!-- Increased max-w-md for larger card size -->
+                <!-- Image Carousel -->
+                <div class="relative">
+                     <div class="carousel-images">
+                        <img src="static/images/Screenshot 2024-12-13 at 08.45.58.png" alt="Deluxe Room" class="room-image w-full h-64 object-cover">
+                        <img src="static/images/hello.png" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/doubleroom.jpg" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/hello.png" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <button class="prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❮</button>
+                    <button class="next absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❯</button>
+                </div>
+                <div class="p-6">
+                    <h3 class="room-title text-2xl font-bold mb-4 text-cyan-500">Deluxe Double Room</h3>
+                    <p class="room-description text-gray-500 mb-4">
+                        Experience elegance and comfort in our Deluxe Double Room. With a spacious layout, plush queen-sized bed, and an en-suite bathroom, this room is ideal for couples or solo travelers seeking tranquility. Enjoy stunning cityscape views, premium bedding, and complimentary high-speed Wi-Fi.
+                    </p>
+                    <button class="see-details-btn bg-cyan-500 text-white py-2 px-4 rounded-md mt-4 hover:bg-cyan-600 transition">See Details</button>
+                </div>
+            </div>
+
+            <!-- Room 2 -->
+            <div class="room-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md mx-auto"> <!-- Increased max-w-md for larger card size -->
+                <!-- Image Carousel -->
+                <div class="relative">
+                     <div class="carousel-images">
+                        <img src="static/images/palmntree.jpeg" alt="Family Room" class="room-image w-full h-64 object-cover">
+                        <img src="static/images/hello.png" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/flowers.jpeg" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/Screenshot 2024-12-13 at 09.17.24.png" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <button class="prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❮</button>
+                    <button class="next absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❯</button>
+                </div>
+                <div class="p-6">
+                    <h3 class="room-title text-2xl font-bold mb-4 text-cyan-500">Family Room</h3>
+                    <p class="room-description text-gray-500 mb-4">
+                        Designed for families, our spacious Family Room offers two queen-sized beds, a cozy living area, and a private balcony. This room provides everything you need for a comfortable stay, including entertainment options, a mini-fridge, and scenic views. Perfect for memorable family moments.
+                    </p>
+                    <button class="see-details-btn bg-cyan-500 text-white py-2 px-4 rounded-md mt-4 hover:bg-cyan-600 transition">See Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-cyan-500 text-white mt-10 py-8">
+    <div class="container mx-auto px-4 text-center">
+
+
+        <!-- Footer Copyright -->
+        <p class="text-l">© 2024 Hello Leisure. All rights reserved.</p>
+    </div>
+</footer>
+
+
+
+

@@ -1,0 +1,79 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 item-center font-serif">
+
+    <form action="{{ url_for('create_room') }}" method="POST" enctype="multipart/form-data"
+        class="m-6 max-w-4xl mx-auto bg-white p-6 rounded shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Create New Room</h2>
+
+        <div class="grid sm:grid-cols-2 gap-10">
+
+            <!-- Room Number -->
+            <div class="relative flex items-center">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Room Number</label>
+                <input type="text" name="room_number" placeholder="Room Number" required
+                    class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none" />
+            </div>
+
+            <!-- Room Type -->
+            <div class="relative flex items-center">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Room Type</label>
+                <input type="text" name="room_type" placeholder="Room Type" required
+                    class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none" />
+            </div>
+
+            <!-- Description -->
+            <div class="relative flex items-center col-span-2">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Description</label>
+                <textarea name="description" placeholder="Description"
+                    class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none"></textarea>
+            </div>
+
+            <!-- Price Per Night -->
+            <div class="relative flex items-center">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Price Per Night</label>
+                <input type="number" step="0.01" name="price_per_night" placeholder="Price per Night" required
+                    class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none" />
+            </div>
+
+            <!-- Availability Checkbox -->
+            <div class="relative flex items-center">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Available</label>
+                <input type="checkbox" name="availability"
+                    class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-500 rounded" />
+            </div>
+
+              <div class="relative flex items-center">
+           <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Capacity</label>
+           <input type="number" id="capacity" name="capacity"
+           class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none" />
+            </div>
+
+            <!-- Image Upload -->
+            <div class="relative flex items-center col-span-2">
+                <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Upload Images</label>
+                <input type="file" name="images" multiple
+                    class=" px-4 py-3.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
+            </div>
+        </div>
+
+
+
+
+        <!-- Submit Button -->
+        <div class="mt-8 flex justify-between">
+            <button type="submit"
+                class="px-6 py-2.5 text-sm bg-cyan-500 text-white rounded hover:bg-cyan-600 transition-all">Create Room</button>
+            <a href="{{ url_for('admin_panel') }}"
+                class="px-6 py-2.5 text-sm bg-gray-300 text-black rounded hover:bg-gray-400 transition-all">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>

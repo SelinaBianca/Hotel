@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+    <title>Create Booking</title>
+</head>
+<body class="bg-gray-100 font-serif">
+
+<h1 class="text-2xl font-bold text-center mt-8">Create Booking</h1>
+
+<form method="POST" enctype="multipart/form-data" class="m-6 max-w-4xl mx-auto bg-white p-6 rounded shadow-lg">
+    <h2 class="text-xl font-semibold mb-4">Booking Details</h2>
+
+    <div class="grid sm:grid-cols-2 gap-10">
+       <!-- Booking Number -->
+<div class="relative flex items-center col-span-2">
+    <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Booking Number</label>
+    <input type="text" id="booking_number" name="booking_number" value="{{ generated_booking_number }}" readonly class="px-4 py-3.5 bg-gray-200 text-black w-full text-sm border-2 border-gray-100 rounded outline-none">
+</div>
+
+
+        <!-- Room Type -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Room Type</label>
+            <select id="room_id" name="roomID" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+                {% for room in rooms %}
+                    <option value="{{ room.roomID }}">{{ room.room_type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Services -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Services</label>
+            <select id="service_ids" name="service_ids[]" multiple required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+                {% for service in services %}
+                    <option value="{{ service.serviceID }}">{{ service.service_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Check-in Date -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Check-in Date</label>
+            <input type="date" id="check_in" name="check_in" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Check-out Date -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Check-out Date</label>
+            <input type="date" id="check_out" name="check_out" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Number of Adults -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Number of Adults</label>
+            <input type="number" id="no_adults" name="no_adults" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Number of Kids -->
+        <div class="relative flex items-center">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Number of Kids</label>
+            <input type="number" id="no_kids" name="no_kids" class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- First Name -->
+        <div class="relative flex items-center col-span-2">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">First Name</label>
+            <input type="text" id="name" name="name" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Last Name -->
+        <div class="relative flex items-center col-span-2">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Last Name</label>
+            <input type="text" id="surname" name="surname" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Email -->
+        <div class="relative flex items-center col-span-2">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Email</label>
+            <input type="email" id="email" name="email" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Phone Number -->
+        <div class="relative flex items-center col-span-2">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Phone Number</label>
+            <input type="text" id="phone_number" name="phone_number" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+
+        <!-- Total Price -->
+        <div class="relative flex items-center col-span-2">
+            <label class="text-[13px] bg-white text-black absolute px-2 top-[-10px] left-[18px]">Total Price</label>
+            <input type="number" step="0.01" id="total_price" name="total_price" required class="px-4 py-3.5 bg-white text-black w-full text-sm border-2 border-gray-100 focus:border-blue-500 rounded outline-none">
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-between">
+        <button type="submit" class="px-6 py-2.5 text-sm bg-cyan-500 text-white rounded hover:bg-blue-600 transition-all">Create Booking</button>
+        <a href="{{ url_for('admin_panel') }}" class="px-6 py-2.5 text-sm bg-gray-300 text-black rounded hover:bg-gray-400 transition-all">Cancel</a>
+    </div>
+</form>
+
+</body>
+</html>

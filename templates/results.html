@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Airport Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: serif;
+        }
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Content -->
+    <main class="py-16">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-12 text-cyan-500">Find the perfect stay for your journey — where comfort meets convenience!</h1>
+      <ul>
+          <div class="flex flex-wrap justify-center gap-4">
+    {% for room in rooms %}
+    <li class="room-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto mb-4"> <!-- Added mb-4 for spacing between cards -->
+        <!-- Image Carousel -->
+        <div class="relative">
+            <div class="carousel-images">
+                <!-- Add image URLs dynamically or keep static for now -->
+                <img src="static/images/hello.png" alt="{{ room['room_type'] }}" class="room-image w-full h-64 object-cover">
+                <img src="static/images/diningarea.jpeg" alt="{{ room['room_type'] }}" class="room-image w-full h-64 object-cover hidden">
+                <img src="static/images/room3-3.jpg" alt="{{ room['room_type'] }}" class="room-image w-full h-64 object-cover hidden">
+                <img src="static/images/room3-4.jpg" alt="{{ room['room_type'] }}" class="room-image w-full h-64 object-cover hidden">
+            </div>
+            <!-- Navigation Buttons -->
+            <button class="prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❮</button>
+            <button class="next absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❯</button>
+        </div>
+        <div class="p-6">
+            <h3 class="room-title text-2xl font-bold mb-4 text-cyan-500">{{ room['room_type'] }}</h3>
+            <p class="room-description text-gray-500 mb-4">{{ room['description'] }}</p>
+            <p class="text-gray-700 font-semibold mb-4">Price per night: ${{ room['price_per_night'] }}</p>
+            <a href="/book/{{ room['roomID'] }}?check_in={{ check_in }}&check_out={{ check_out }}&no_adults={{ no_adults }}&no_kids={{ no_kids }}" class="text-m font-medium  text-cyan-500 hover:text-cyan-700 transition">Book Now</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+
+        </div>
+    </div>
+</main>
+
+
+    <!-- Footer -->
+    <footer class="bg-cyan-500 text-white py-4 mt-16">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Hello Airport Hotel. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

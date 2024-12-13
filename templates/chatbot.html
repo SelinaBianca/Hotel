@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+<nav class="bg-cyan-500 w-full py-4 absolute  z-40">
+        <ul class="flex justify-center gap-8">
+            <li><a href="{{ url_for('home') }}" class="text-white uppercase text-sm">Home</a></li>
+            <li><a href="{{ url_for('experience_page') }}" class="text-white uppercase text-sm">Experience</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" class="text-white uppercase text-sm">Booking</a></li>
+            <li><a href="{{ url_for('news') }}" class="text-white uppercase text-sm">News & Offers</a></li>
+            <li><a href="{{ url_for('login') }}" class="text-white uppercase text-sm">Login</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Main content container -->
+    <main class="flex-grow flex items-center justify-center">
+        <!-- Chatbot iframe container -->
+        <div class="bg-white shadow-lg rounded-lg p-4">
+            <iframe
+                allow="microphone;"
+                width="350"
+                height="430"
+                class="rounded-lg"
+                src="https://console.dialogflow.com/api-client/demo/embedded/9418c26c-ca03-4ac7-90cc-2ce82df33068">
+            </iframe>
+        </div>
+    </main>
+
+      <footer class="bg-cyan-500 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+
+
+        <!-- Footer Copyright -->
+        <p class="text-l">© 2024 Hello Leisure. All rights reserved.</p>
+    </div>
+</footer>
+
+
+</body>
+</html>

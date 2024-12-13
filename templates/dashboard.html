@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family:serif;
+        }
+
+        .welcome-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        .quick-links a {
+            background-color: #00A3C4;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .quick-links a:hover {
+            background-color: #007991;
+
+        }
+
+
+        .logout-btn {
+            background-color: gray;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: auto; /* Push it to the bottom */
+        }
+
+        .logout-btn:hover {
+            background-color: #c930;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-black">
+
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 h-full w-64 bg-cyan-500 text-white flex flex-col">
+        <div class="text-2xl font-semibold p-6">Hotel Admin</div>
+        <nav class="mt-10">
+            <a href="{{ url_for('admin_panel') }}" class="block px-6 py-3 hover:bg-gray-700 bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('admin_rooms') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Rooms</a>
+            <a href="{{ url_for('manage_bookings') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Bookings</a>
+            <a href="{{ url_for('list_services') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Services</a>
+            <a href="{{ url_for('manage_news_alerts') }}" class="block px-6 py-3 hover:bg-gray-700">Manage News Alerts</a>
+            <a href="{{ url_for('view_users') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Users</a>
+        </nav>
+         <a href="{{ url_for('logout') }}" class="block logout-btn">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="ml-64 p-6">
+        <div class="welcome-card">
+            <h1 class="text-3xl font-bold">Welcome, Admin!</h1>
+            <p class="mt-2">We're glad to have you back. Here's a summary of your hotel's performance today.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links mt-10">
+            <h2 class="text-2xl font-semibold mb-4">Quick Actions</h2>
+            <a href="{{ url_for('admin_rooms') }}">Manage Rooms</a>
+            <a href="{{ url_for('manage_bookings') }}">Manage Bookings</a>
+            <a href="{{ url_for('view_users') }}">Manage Users</a>
+            <a href="{{ url_for('list_services') }}">Manage Services</a>
+            <a href="{{ url_for('manage_news_alerts') }}">Manage News Alerts</a>
+        </div>
+    </main>
+
+</body>
+</html>

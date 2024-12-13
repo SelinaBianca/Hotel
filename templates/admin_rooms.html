@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+    <title>Manage Rooms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        /* Add styling to ensure the content fits within the container */
+        .content-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            white-space: nowrap; /* Prevent text from wrapping and maintain a tidy appearance */
+        }
+
+        /* Responsive container to prevent overflow */
+        .responsive-container {
+            width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling inside the div */
+        }
+
+        /* Adjust table layout for small screens */
+        @media (max-width: 768px) {
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-black">
+
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 h-full w-64 bg-cyan-500 text-white flex flex-col">
+        <div class="text-2xl font-semibold p-6">Hotel Admin</div>
+        <nav class="mt-10">
+            <a href="{{ url_for('admin_panel') }}" class="block px-6 py-3 hover:bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('admin_rooms') }}" class="block px-6 py-3 hover:bg-gray-700 bg-gray-700">Manage Rooms</a>
+            <a href="{{ url_for('manage_bookings') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Bookings</a>
+            <a href="{{ url_for('list_services') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Services</a>
+            <a href="{{ url_for('manage_news_alerts') }}" class="block px-6 py-3 hover:bg-gray-700">Manage News Alerts</a>
+            <a href="{{ url_for('view_users') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Users</a>
+        </nav>
+    </div>
+<!-- Main content -->
+<div class="ml-64 container mx-auto my-8 px-6 content-container">
+    <h1 class="text-3xl font-semibold mb-8 text-left">Manage Rooms</h1>
+
+    <div class="mb-4">
+        <a href="{{ url_for('create_room') }}" class="inline-flex items-center px-4 py-2 bg-cyan-500 text-white font-semibold rounded hover:bg-blue-700 transition duration-200 ml-auto">Create Room</a>
+    </div>
+
+    <!-- Responsive table container -->
+    <div class="responsive-container shadow-md sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200 bg-white">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Room Number</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Room Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price Per Night</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Availability</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Capacity</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Images</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for room in rooms %}
+                <tr>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ room[1] }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ room[2] }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ room[3] }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ room[4] }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ 'Yes' if room[5] else 'No' }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-800">{{ room[6] }}</td> <!-- Added capacity value here -->
+                    <td class="px-6 py-4 text-sm text-gray-800">
+                        {% for img in room_images %}
+                            {% if img[0] == room[0] %}
+                                <img src="{{ url_for('static', filename=img[1].split('static/')[1]) }}" alt="Room Image" style="width: 50px; height: 50px;">
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="px-8 py-4 text-sm text-center">
+                        <div class="flex justify-center space-x-2">
+                            <a href="{{ url_for('edit_room', room_id=room[0]) }}"
+                              class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                               Edit
+                            </a>
+                            <form action="{{ url_for('delete_room', room_id=room[0]) }}" method="POST" style="display:inline;">
+                               <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Flash messages for success or error notifications -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</div>
+</body>
+</html>

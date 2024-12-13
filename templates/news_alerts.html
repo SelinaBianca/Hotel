@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage News Alerts</title>
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-serif">
+
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 h-full w-64 bg-cyan-500 text-white flex flex-col">
+        <div class="text-2xl font-semibold p-6">Admin Panel</div>
+        <nav class="mt-10">
+            <a href="{{ url_for('admin_panel') }}" class="block px-6 py-3 hover:bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('admin_rooms') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Rooms</a>
+            <a href="{{ url_for('manage_bookings') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Bookings</a>
+            <a href="{{ url_for('list_services') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Services</a>
+            <a href="{{ url_for('manage_news_alerts') }}" class="block px-6 py-3 hover:bg-gray-700 bg-gray-700">Manage News Alerts</a>
+            <a href="{{ url_for('view_users') }}" class="block px-6 py-3 hover:bg-gray-700">Manage Users</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-64 container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-4">Manage News Alerts</h1>
+
+        <!-- Back to Dashboard and Create News Alert Link -->
+        <div class="mb-4">
+
+            <a href="{{ url_for('create_news_alert') }}" class="px-4 py-2 bg-cyan-500 text-white rounded hover:bg-blue-600 transition-all">Create News Alert</a>
+        </div>
+
+        <!-- Table Displaying News Alerts -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 bg-white">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Image</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Created At</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for news in news_alerts %}
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ news[1] }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ news[2] }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">
+                            {% if news[3] %}
+                                <img src="data:image/png;base64,{{ news[3]|b64encode }}" alt="News Image" style="width: 50px; height: 50px;">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ news[4] }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">
+                            <form action="{{ url_for('delete_news_alert', news_id=news[0]) }}" method="POST">
+                                <button type="submit" class="text-red-500 hover:text-red-700 transition">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Flash messages for success or error notifications -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="mt-4">
+            {% for category, message in messages %}
+            <li class="text-{{ 'green' if category == 'success' else 'red' }}-500">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

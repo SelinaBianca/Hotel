@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Airport Hotel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: serif;
+        }
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #333333;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            background: transparent;
+        }
+
+          .menu-btn {
+    background: #00bcd4;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: fixed; /* Makes the button fixed */
+    top: 1rem; /* Positions it from the top */
+    left: 2rem; /* Keeps it on the left */
+    z-index: 1000; /* Ensures it's on top of content */
+}
+
+.reservation-btn {
+    background: #00bcd4;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: fixed; /* Makes the button fixed */
+    top: 1rem; /* Positions it from the top */
+    right: 2rem; /* Keeps it on the right */
+    z-index: 1000; /* Ensures it's on top of content */
+}
+
+        .logo {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 1rem; /* Same top alignment as the buttons */
+    left: 50%; /* Center the logo horizontally */
+    transform: translateX(-50%); /* Adjust to perfectly center it */
+    z-index: 999; /* Ensure it stays on top */
+}
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        nav {
+            background:  #00bcd4;
+            padding: 1rem 0 1rem;
+            position: absolute;
+            width: 100%;
+            top: 100px;
+            z-index: 9;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color:  #ffffff;
+            padding: 0 1rem;
+            height: 100%;
+        }
+
+        .title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        /* Slide indicators */
+        .slide-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .indicator {
+            width: 30px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            width: 50px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .award {
+            margin-top: 2rem;
+            width: 150px;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+
+
+                .rotator-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+
+
+            .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .visible {
+            opacity: 1;
+        }
+
+        .rotator-wrapper {
+            position: relative;
+            height: 100vh; /* Full height */
+            overflow: hidden;
+        }
+
+        .hotel-info-panel {
+            position: relative; /* Make sure the info panel stays on top */
+            z-index: 10; /* Ensure it appears above the background */
+            color: white; /* Change text color as needed */
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Optional: Semi-transparent background */
+        }
+
+
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="menu-btn">
+            <i class="fas fa-bars"></i>
+            Menu
+        </button>
+
+        <div class="logo">
+            <img src="static/images/logo.JPG" alt="Hotel Logo" class="logo-img">
+        </div>
+
+        <a href="/verify-reservation" class="reservation-btn">
+           My Reservations
+        </a>
+    </div>
+
+    <nav class="bg-cyan-500 w-full py-4 absolute  z-40">
+        <ul class="flex justify-center gap-8">
+            <li><a href="{{ url_for('home') }}" class="text-white uppercase text-sm">Home</a></li>
+            <li><a href="{{ url_for('experience_page') }}" class="text-white uppercase text-sm">Experience</a></li>
+            <li><a href="{{ url_for('reservation_page') }}" class="text-white uppercase text-sm">Booking</a></li>
+            <li><a href="{{ url_for('news') }}" class="text-white uppercase text-sm">News & Offers</a></li>
+            <li><a href="{{ url_for('login') }}" class="text-white uppercase text-sm">Login</a></li>
+        </ul>
+    </nav>
+
+    <main class="hero">
+        <main class="hero-content  font-serif ">
+            <h1 class="title font-serif text-3xl md:text-4xl lg:text-5xl  ">Hello Airport Hotel</h1>
+            <p class="tagline  font-serif text-1xl md:text-2xl ">Luxury stay at budget rate for modern traveler. Welcome to Hello Airport Hotel, that’s our concept.</p>
+            <p class="tagline  font-serif text-1xl md:text-2xl">By Hello Leisure</p>
+            <div class="slide-indicators  font-serif "></div>
+        </main>
+    </main>
+
+
+    <section  class="bg-white-800 h-screen flex items-center justify-center" >
+
+
+    <!-- Main Content -->
+    <div class="text-center">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl text-cyan-500 font-serif mb-6 mx-11 leading-tight">
+           At Hello Airport Hotel, we’re not just a stopover; we’re part of your travel experience.<br>
+           Enjoy seamless access to relaxation, comfort, and convenience, all just minutes from the runway.
+        </h1>
+        <p class="text-1xl md:text-2xl text-gray-500 font-serif">
+           Book your stay with us today and experience the perfect blend of travel and tranquility!
+        </p>
+
+        <!-- Button -->
+        <div class="mt-8">
+            <button class="px-8 py-3 bg-cyan-500 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-gray-500 transition duration-300">
+                Book Now
+            </button>
+        </div>
+    </div>
+
+    </section>
+   <section class="our-rooms-section bg-white py-16">
+    <div class="container mx-auto px-4 text-center max-w-5xl"> <!-- Added max-w-5xl for limiting width -->
+        <h2 class="our-rooms-title text-4xl text-cyan-500 font-bold mb-8">Our Rooms</h2>
+        <p class="our-rooms-description text-gray-500 text-lg mb-12">
+            Explore a variety of rooms tailored to meet the needs of every traveler. Whether you're here for a short stay or an extended visit, we have the perfect space for you.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
+            <!-- Room 1 -->
+            <div class="room-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto"> <!-- Added max-w-sm for smaller card width -->
+                <!-- Image Carousel -->
+                <div class="relative">
+                    <div class="carousel-images">
+                        <img src="static/images/hello.png" alt="Deluxe Room" class="room-image w-full h-64 object-cover">
+                        <img src="static/images/hello.png" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/room1-3.jpg" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/room1-4.jpg" alt="Deluxe Room" class="room-image w-full h-64 object-cover hidden">
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <button class="prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❮</button>
+                    <button class="next absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❯</button>
+                </div>
+                <div class="p-6">
+                    <h3 class="room-title text-2xl font-bold mb-4 text-cyan-500">Double Room</h3>
+                    <p class="room-description text-gray-500 mb-4">
+                        A spacious room with a Queen-sized bed, en-suite bathroom, and stunning views of the city skyline.
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Room 2 -->
+            <div class="room-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto"> <!-- Added max-w-sm for smaller card width -->
+                <!-- Image Carousel -->
+                <div class="relative">
+                    <div class="carousel-images">
+                        <img src="static/images/hello.png" alt="Family Room" class="room-image w-full h-64 object-cover">
+                        <img src="" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/hello.png" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                        <img src="static/images/palmntree.jpeg" alt="Family Room" class="room-image w-full h-64 object-cover hidden">
+                    </div>
+                    <!-- Navigation Buttons -->
+                    <button class="prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❮</button>
+                    <button class="next absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-cyan-500 px-3 py-2 rounded-full shadow-lg">❯</button>
+                </div>
+                <div class="p-6">
+                    <h3 class="room-title text-2xl font-bold mb-4 text-cyan-500">Family Room</h3>
+                    <p class="room-description text-gray-500 mb-4">
+                        Perfect for families, the room comes with 2 queen size beds, a living area, and a private balcony.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="our-rooms-section bg-white py-16">
+    <div class="container mx-auto px-4 text-center max-w-5xl">
+        <h2 class="our-rooms-title text-4xl text-cyan-500 font-bold mb-8">Our Services</h2>
+        <p class="our-rooms-description text-gray-500 text-lg mb-12">
+            Explore a variety of services tailored to meet the needs of every traveler. Whether you're here for a short stay or an extended visit, we offer quality services to make your experience more comfortable.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center">
+            <!-- Service 1: Laundry -->
+            <div class="service-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto">
+                <!-- Image -->
+                <img src="static/images/laundry.jpg" alt="Laundry Service" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="service-title text-2xl font-bold mb-4 text-cyan-500">Laundry Service</h3>
+                    <p class="service-description text-gray-500 mb-4">
+                        Enjoy our convenient laundry service to keep your clothes fresh and clean during your stay.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Service 2: Airport Pick Up & Drop -->
+            <div class="service-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto">
+                <!-- Image -->
+                <img src="static/images/airport_pickup.jpg" alt="Airport Pick Up & Drop" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="service-title text-2xl font-bold mb-4 text-cyan-500">Airport Pick Up & Drop</h3>
+                    <p class="service-description text-gray-500 mb-4">
+                        We offer reliable airport pick up and drop services to ensure your travel is stress-free.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Service 3: Food & Beverages -->
+            <div class="service-card bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-sm mx-auto">
+                <!-- Image -->
+                <img src="static/images/food_beverages.jpg" alt="Food & Beverages" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="service-title text-2xl font-bold mb-4 text-cyan-500">Food & Beverages</h3>
+                    <p class="service-description text-gray-500 mb-4">
+                        Savor a variety of local and international cuisines, paired with refreshing beverages.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section class="contact-section bg-gray-100 py-16">
+    <div class="container mx-auto px-4 max-w-7xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Left Column: Contact Details -->
+            <div class="contact-details flex flex-col justify-center text-center md:text-left">
+                <h2 class="text-4xl font-bold text-cyan-500 mb-6">Get in Touch</h2>
+                <p class="text-gray-600 text-lg mb-8">
+                    We'd love to hear from you! Reach out to us for any inquiries or support.
+                </p>
+
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <!-- Phone -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a3 3 0 004.242 0l7.89-7.89m-2.82-2.82A5 5 0 0014 5H6a5 5 0 00-3.54 8.54L3 20.93m0 0l5.46-5.46m0 0L3 13.27" />
+                        </svg>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-cyan-500">Phone</h3>
+                            <p class="text-gray-600">+94 123 456 789</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12V8a4 4 0 10-8 0v4m6 0h-4m-2 0h10m0 0a2 2 0 00-2 2v4a2 2 0 01-2 2H7a2 2 0 01-2-2v-4a2 2 0 00-2-2m12 0H7m5-4h-4" />
+                        </svg>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-cyan-500">Chat with us</h3>
+                            <a class="text-gray-600" href="{{ url_for('chatbot') }}" target="_blank" id="chatbot-button">Say Hi to HelloBot</a>
+
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C8.134 2 5 5.134 5 9c0 7.5 7 13 7 13s7-5.5 7-13c0-3.866-3.134-7-7-7z" />
+                        </svg>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-cyan-500">Address</h3>
+                            <p class="text-gray-600">123 Airport Rd, Colombo, Sri Lanka</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Right Column: Google Map Embed -->
+            <div class="rounded-lg shadow-lg overflow-hidden">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.6209305753396!2d79.86440977505774!3d7.169743092835062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2e5453e4f6f1f%3A0x364a05f8e4f80062!2sHello%20Airport%20Hotel!5e0!3m2!1sen!2slk!4v1729653049869!5m2!1sen!2slk"
+                    width="600" height="450" style="border:0; width: 100%; height: 100%;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <footer class="bg-cyan-500 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+
+
+        <!-- Footer Copyright -->
+        <p class="text-l">© 2024 Hello Leisure. All rights reserved.</p>
+    </div>
+</footer>
+
+    <script>
+        const images = [
+            'static/images/hello.png',
+            'static/images/pexels-tima-miroshnichenko-5725589-removebg.png',
+            'static/images/pexels-tima-miroshnichenko-5725589-removebg.png',
+            'static/images/pexels-tima-miroshnichenko-5725589-removebg.png'
+        ];
+
+        let currentSlide = 0;
+        const hero = document.querySelector('.hero');
+        const indicators = document.querySelector('.slide-indicators');
+
+        images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.className = `slide ${index === 0 ? 'active' : ''}`;
+            slide.style.backgroundImage = `url(${image})`;
+            hero.insertBefore(slide, hero.firstChild);
+
+            const indicator = document.createElement('div');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.addEventListener('click', () => goToSlide(index));
+            indicators.appendChild(indicator);
+        });
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.indicator');
+
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % images.length;
+            goToSlide(nextIndex);
+        }
+
+        setInterval(nextSlide, 2000);
+
+
+
+
+
+
+        document.querySelectorAll('.room-card').forEach(function (roomCard) {
+        let currentImageIndex = 0;
+        const images = roomCard.querySelectorAll('.carousel-images img');
+        const totalImages = images.length;
+
+        // Show the first image by default
+        images[currentImageIndex].classList.remove('hidden');
+
+        roomCard.querySelector('.prev').addEventListener('click', function () {
+            images[currentImageIndex].classList.add('hidden');
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            images[currentImageIndex].classList.remove('hidden');
+        });
+
+        roomCard.querySelector('.next').addEventListener('click', function () {
+            images[currentImageIndex].classList.add('hidden');
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            images[currentImageIndex].classList.remove('hidden');
+        });
+    });
+
+
+
+
+    </script>
+</body>
+</html>
